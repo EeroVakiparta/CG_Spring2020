@@ -2,16 +2,20 @@
 
 
 
-## Different language CC_Templates
+## Different languages
 
-- [Python template](#CC_Python.java)
-- [Java template](#CC_Java.py)
-- [C# template](#CC_Csharp.cs)
-- [Bash template](#CC_Bash.sh)
+- [Python](#python)
+    * [Python template](#CC_Python.java)
+- [Java](#java)
+    * [Java template](#CC_Java.py)
+- [Csharp](#csharp)
+    * [C# template](#CC_Csharp.cs)
+- [Bash](#Bash)
+    * [Bash template](#CC_Bash.sh)
 
+## Python
 
-
-## CC_Python.java
+### CC_Python.java
 
 Record:
 ```
@@ -19,8 +23,9 @@ Record:
 Wood 2 League
 ```
 
+## Java
 
-## CC_Java.py
+### CC_Java.py
 
 Record:
 
@@ -29,7 +34,9 @@ Record:
 Wood 2 League
 ```
 
-## CC_Csharp.cs
+## C#
+
+### CC_Csharp.cs
 
 Record:
 
@@ -38,7 +45,9 @@ Record:
 Wood 2 League
 ```
 
-## CC_Bash.sh
+## Bash
+
+### CC_Bash.sh
 
 Record:
 
