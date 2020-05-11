@@ -4,10 +4,10 @@
 
 ## Different language CC_Templates
 
-- [Python] (#CC_Python.java)
-- [Java] (#CC_Java.py)
-- [C#] (#CC_Csharp.cs)
-- [Bash] (#CC_Bash.sh)
+- [Python template](#CC_Python.java)
+- [Java template](#CC_Java.py)
+- [C# template](#CC_Csharp.cs)
+- [Bash template](#CC_Bash.sh)
 
 
 
@@ -25,6 +25,8 @@ Wood 2 League
 Record:
 
 ```
+143 pellets
+Wood 2 League
 ```
 
 ## CC_Csharp.cs
