@@ -39,7 +39,9 @@ class Player {
 		boolean random = false;
 		// game loop
 		while (true) {
-
+			areaOfPellets = new int[width][height];
+			mappi = new Mappi(areaOfPlay,areaOfPellets);
+			pakList = new ArrayList<Pak>();
 			int myScore = in.nextInt();
 			int opponentScore = in.nextInt();
 			int visiblePacCount = in.nextInt(); // all your pacs and enemy pacs in sight
@@ -52,8 +54,9 @@ class Player {
 				int speedTurnsLeft = in.nextInt(); // unused in wood leagues
 				int abilityCooldown = in.nextInt(); // unused in wood leagues
 				if (mine) {
-					pakList.add(pacId, PakMaker(pacId,x,y));
+					pakList.add( PakMaker(pacId,x,y,typeId,speedTurnsLeft,abilityCooldown));
 				}
+            
 
 			}
 
@@ -66,19 +69,27 @@ class Player {
 				int x = in.nextInt();
 				int y = in.nextInt();
 				int value = in.nextInt(); // amount of points this pellet is worth
-				mappi.pellets[x][y] = (char) value;
+				mappi.pellets[x][y] = value;
+				//System.err.println(value + " in" + x +"-" + y);
 			}
+
 			Set<Command> commands = new HashSet<>();
 			if(random){
 				commands = RandomCommander(mappi, pakList);
 			}else{
 				commands = PakCommander(mappi, pakList);
 			}
-			
+
 			// Write an action using System.out.println()
 			// To debug: System.err.println("Debug messages...");
-
-			printCommands(commands);
+			try{
+                //System.err.println(commands);
+                //System.err.println(pakList);
+				printCommands(commands,pakList);
+			}catch (Error eero){
+				System.out.println("MOVE 0 0 0");
+			}
+			
 
 			if(oldScore < myScore){
 				vuoroIlmanScore = 0;
@@ -87,7 +98,7 @@ class Player {
 				vuoroIlmanScore++;
 			}
 			if(vuoroIlmanScore > 4){
-				random = true;
+				//	random = true;
 			}else{
 				random = false;
 			}
@@ -95,19 +106,34 @@ class Player {
 		}
 	}
 
-	public static Set<Command> printCommands(Set<Command> commands) {
-		String print = "";
-		for (Command c : commands) {
-			print += "MOVE " + c.who + " " + c.toX + " " + c.toY + " | ";
+	public static Set<Command> printCommands(Set<Command> commands, List<Pak> pakList) {
+		for (Pak p : pakList) {
+			for (Command c : commands) {
+				if (p.Id == c.who) {
+					p.setCommand(c);
+				}
+			}
 		}
 
-		System.out.println(print.substring(0,print.length() - 3));
+		String print = "";
+		for (Pak p : pakList) {
+			if (p != null){
+				if (p.coolDown == 0) {
+					print += "SPEED " + p.Id + " | ";
+				}else{
+					print += "MOVE " + p.Id + " " + p.command.toX + " " + p.command.toY + " | ";
+
+				}
+			}
+		}
+
+		System.out.println(print.substring(0,print.length() -2));
 		return commands;
 	}
 
 
-	public static Pak PakMaker(int pakID, int x, int y){
-		return new Pak(pakID, x, y);
+	public static Pak PakMaker(int pakID, int x, int y,String type,int speed, int cd){
+		return new Pak(pakID, x, y,type,speed,cd);
 	}
 
 	private static Set<Command> RandomCommander(Mappi m, List<Pak> pl) {
@@ -117,12 +143,9 @@ class Player {
 			pew: for (int i = 0; i < food.length; i++) {
 				for (int j = 0; j < food[i].length; j++) {
 					int f = food[i][j];
-					if (f > 1) {
-						commands.add(new Command(p.Id, i, j));
-						break pew;
-					}else if (f == 1){
-						commands.add(new Command(p.Id, i, j));
-					}
+
+					commands.add(new Command(p.Id, i, j));
+
 				}
 
 			}
@@ -140,31 +163,39 @@ class Player {
 				for (int j = 0; j < food[i].length; j++) {
 					boolean reserved = false;
 					int f = food[i][j];
-					Location tempLocation = new Location(i, j);
-					for (Location l : commandLocations) {
-						if (l.lx == i && l.ly == j) {
-							reserved = true;
-							break;
+					if ( f > 0){
+						Location tempLocation = new Location(i, j);
+						for (Location l : commandLocations) {
+							if (l.lx == i && l.ly == j) {
+								reserved = true;
+								break;
+							}
 						}
-					}
-					if (reserved) {
-						// System.err.println("reserved" + tempLocation);
-					}else {
-						if (f > 1) {
-							//System.err.println( p.Id +" attacking fat target= " + i + "-" + j);
-							commands.add(new Command(p.Id, i, j));
-							commandLocations.add(new Location(i, j));
-							break found;
-						} else if (f == 1) {
-							// System.err.println( p.Id +" attacking target= " + i + "-" + j);
-							int distToFood = Math.abs(p.isX - i) + Math.abs(p.isY - j);
-							if (distToFood < tempDistToClosest) {
-								tempDistToClosest = distToFood;
+						if (reserved) {
+							// System.err.println("reserved" + tempLocation);
+						}else {
+							if(f>1){
+								Command c = new Command(p.Id, i, j);
 								commandLocations.add(new Location(i, j));
-								commands.add( new Command(p.Id, i, j));
+								commands.remove(c);
+								commands.add(c);
+								break found;
+
+							}	else{
+
+								// System.err.println( p.Id +" attacking target= " + i + "-" + j);
+								int distToFood = Math.abs(p.isX - i) + Math.abs(p.isY - j);
+								if (distToFood < tempDistToClosest) {
+									tempDistToClosest = distToFood;
+									commandLocations.add(new Location(i, j));
+									Command c = new Command(p.Id, i, j);
+									commands.remove(c);
+									commands.add(c);
+								}
 							}
 						}
 					}
+
 				}
 
 			}
@@ -226,6 +257,13 @@ class Command{
 	public int hashCode() {
 		return Objects.hash(who);
 	}
+
+    @Override
+	public String toString() {
+		return 	"Move=" + who +
+			" to X=" + toX +
+			" Y=" + toY;
+	}
 }
 
 
@@ -234,11 +272,86 @@ class Pak {
 	int Id;
 	int isX;
 	int isY;
+	String type;
+	int speedLeft;
+	int coolDown;
+	Command command = new Command(Id, isX, isY);
 
-	public Pak(int id, int isX, int isY) {
+	public Pak(int id, int isX, int isY, String type, int speedLeft, int coolDown) {
 		Id = id;
 		this.isX = isX;
 		this.isY = isY;
+		this.type = type;
+		this.speedLeft = speedLeft;
+		this.coolDown = coolDown;
+	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public int getIsX() {
+		return isX;
+	}
+
+	public void setIsX(int isX) {
+		this.isX = isX;
+	}
+
+	public int getIsY() {
+		return isY;
+	}
+
+	public void setIsY(int isY) {
+		this.isY = isY;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getSpeedLeft() {
+		return speedLeft;
+	}
+
+	public void setSpeedLeft(int speedLeft) {
+		this.speedLeft = speedLeft;
+	}
+
+	public int getCoolDown() {
+		return coolDown;
+	}
+
+	public void setCoolDown(int coolDown) {
+		this.coolDown = coolDown;
+	}
+
+	public Command getCommand() {
+		return command;
+	}
+
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+
+    @Override
+	public String toString() {
+		return "Pak{" +
+			"Id=" + Id +
+			", isX=" + isX +
+			", isY=" + isY +
+			", type='" + type + '\'' +
+			", s=" + speedLeft +
+			", cd=" + coolDown +
+			", c=" + command.toX +"-"+ command.toY;
 	}
 }
 
