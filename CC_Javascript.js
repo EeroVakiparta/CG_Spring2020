@@ -52,6 +52,6 @@ while (true) {
     // Write an action using console.log()
     // To debug: console.error('Debug messages...');
 
-    console.log('MOVE 0 ' + x + ' ' + y);     // MOVE <pacId> <x> <y>
+    console.log('MOVE 0 ' + pacmanCommandX + ' ' + pacmanCommandY);     // MOVE <pacId> <x> <y>
 
 }

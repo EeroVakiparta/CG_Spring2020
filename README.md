@@ -4,18 +4,22 @@
 
 ## Different languages
 
-- [Python](#python)
-    * [Python template](#CC_Python.java)
-- [Java](#java)
-    * [Java template](#CC_Java.py)
-- [Csharp](#csharp)
-    * [C# template](#CC_Csharp.cs)
+- [Python](#Python)
+    * [Python template](#Python-template)
+- [Java](#Java)
+    * [Java template](#Java-template)
+    * [PakCommander](#PakCommander)
+- [Csharp](#Csharp)
+    * [Csharp template](#Csharp-template)
 - [Bash](#Bash)
-    * [Bash template](#CC_Bash.sh)
+    * [Bash template](#Bash-template)
+- [Javascript](#Javascript)
+    * [Javascript template](#Javascript-template)
 
 ## Python
 
-### CC_Python.java
+### Python template
+[CC_Python.py](CC_Python.py)
 
 Record:
 ```
@@ -25,7 +29,8 @@ Wood 2 League
 
 ## Java
 
-### CC_Java.py
+### Java template
+[CC_Java.java](CC_Java.java)
 
 Record:
 
@@ -34,9 +39,19 @@ Record:
 Wood 2 League
 ```
 
-## C#
+### PakCommander
+[evak_Java.java](evak_Java.java)
 
-### CC_Csharp.cs
+Record:
+
+```
+No record
+```
+
+## Csharp
+
+### Csharp template
+[CC_Csharp.cs](CC_Csharp.cs)
 
 Record:
 
@@ -47,11 +62,24 @@ Wood 2 League
 
 ## Bash
 
-### CC_Bash.sh
+### Bash template
+[CC_Bash.sh](CC_Bash.sh)
 
 Record:
 
 ```
 148 pellets
 Wood 2 League
+```
+
+
+## Javascript
+
+### Javascript template
+[CC_Javascript.js](CC_Javascript.js)
+
+Record:
+
+```
+No record
 ```
