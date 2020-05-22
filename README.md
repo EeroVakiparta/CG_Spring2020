@@ -23,7 +23,6 @@
 
 Record:
 ```
-119 pellets
 Wood 2 League
 ```
 
@@ -35,7 +34,6 @@ Wood 2 League
 Record:
 
 ```
-143 pellets
 Wood 2 League
 ```
 
@@ -45,7 +43,8 @@ Wood 2 League
 Record:
 
 ```
-No record
+Bronze League 
+Rank 1,388/2,543
 ```
 
 ## Csharp
@@ -56,7 +55,6 @@ No record
 Record:
 
 ```
-111 pellets
 Wood 2 League
 ```
 
@@ -68,10 +66,8 @@ Wood 2 League
 Record:
 
 ```
-148 pellets
 Wood 2 League
 ```
-
 
 ## Javascript
 

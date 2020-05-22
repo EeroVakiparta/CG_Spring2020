@@ -1,17 +1,10 @@
-
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.IntStream;
 
-/**
- * Grab the pellets as fast as you can!
- **/
 class Player {
 
 	public static void main(String args[]) {
 		List<Pak> pakList = new ArrayList<Pak>();
 		List<String> rows = new ArrayList<>();
-
 
 		Scanner in = new Scanner(System.in);
 		int width = in.nextInt(); // size of the grid
@@ -56,8 +49,6 @@ class Player {
 				if (mine) {
 					pakList.add( PakMaker(pacId,x,y,typeId,speedTurnsLeft,abilityCooldown));
 				}
-            
-
 			}
 
 			for (int[] row: mappi.pellets){
@@ -79,21 +70,15 @@ class Player {
 			}else{
 				commands = PakCommander(mappi, pakList);
 			}
-
-			// Write an action using System.out.println()
-			// To debug: System.err.println("Debug messages...");
 			try{
-                //System.err.println(commands);
-                //System.err.println(pakList);
+				//System.err.println(commands);
+				//System.err.println(pakList);
 				printCommands(commands,pakList);
 			}catch (Error eero){
 				System.out.println("MOVE 0 0 0");
 			}
-			
-
 			if(oldScore < myScore){
 				vuoroIlmanScore = 0;
-
 			}else{
 				vuoroIlmanScore++;
 			}
@@ -122,11 +107,9 @@ class Player {
 					print += "SPEED " + p.Id + " | ";
 				}else{
 					print += "MOVE " + p.Id + " " + p.command.toX + " " + p.command.toY + " | ";
-
 				}
 			}
 		}
-
 		System.out.println(print.substring(0,print.length() -2));
 		return commands;
 	}
@@ -143,11 +126,8 @@ class Player {
 			pew: for (int i = 0; i < food.length; i++) {
 				for (int j = 0; j < food[i].length; j++) {
 					int f = food[i][j];
-
 					commands.add(new Command(p.Id, i, j));
-
 				}
-
 			}
 		}
 		return commands;
@@ -195,15 +175,11 @@ class Player {
 							}
 						}
 					}
-
 				}
-
 			}
 		}
-
 		return commands;
 	}
-
 }
 
 class Location{
@@ -228,10 +204,7 @@ class Location{
 	public int hashCode() {
 		return Objects.hash(lx, ly);
 	}
-
-
 }
-
 
 class Command{
 
@@ -258,14 +231,13 @@ class Command{
 		return Objects.hash(who);
 	}
 
-    @Override
+	@Override
 	public String toString() {
 		return 	"Move=" + who +
 			" to X=" + toX +
 			" Y=" + toY;
 	}
 }
-
 
 class Pak {
 
@@ -342,7 +314,7 @@ class Pak {
 		this.command = command;
 	}
 
-    @Override
+	@Override
 	public String toString() {
 		return "Pak{" +
 			"Id=" + Id +
@@ -355,8 +327,6 @@ class Pak {
 	}
 }
 
-
-
 class Mappi{
 
 	char[][] arena;
@@ -366,5 +336,4 @@ class Mappi{
 		this.arena = map;
 		this.pellets = pellets;
 	}
-
 }
